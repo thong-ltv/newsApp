@@ -17,31 +17,32 @@
             //lưu data ở localstorage
              localStorage.setItem("dataGet", JSON.stringify(data));
             //  console.log(JSON.parse(localStorage.getItem("dataGet"))['articles']);
-
+            var data1 = JSON.parse(localStorage.getItem("dataGet"));
              var dataConnect = "";
-             if(data['totalResults'] > 0)
+             if(data1['totalResults'] > 0)
              {
-                for (let i = 0; i < data['articles'].length; i++) {
+                for (let i = 0; i < data1['articles'].length; i++) {
                 dataConnect += "<div class='col image px-3 pb-3 pt-3 mb-3 border border-dark' style=''>"
-              + "<img style='width: 100%;' src=" + data['articles'][i]['urlToImage'] + " alt='' class='mb-3 imageIndex'> " 
+              + "<img style='width: 100%;' src=" + data1['articles'][i]['urlToImage'] + " alt='' class='mb-3 imageIndex'> " 
               + "<p class='text-uppercase fw-bold'>" 
-              + data['articles'][i]['title'] 
+              + data1['articles'][i]['title'] 
               + "</p>"
               + "<p>" 
-              + data['articles'][i]['description']
+              + data1['articles'][i]['description']
               + "</p>"
               + "<p>"
-              + data['articles'][i]['publishedAt']
+              + data1['articles'][i]['publishedAt']
               + "</p>"
-              + "<a href=" + data['articles'][i]['url'] + ">Đọc thêm... </a>"
+              + "<a href=" + data1['articles'][i]['url'] + ">Đọc thêm... </a>"
               + "</div>" 
               + "<br>";
             }
              }else{
               dataConnect += "<h3>Không có dữ liệu</h3>"
              }
-             console.log(dataConnect)
-            document.getElementById('indexHtml').innerHTML = dataConnect;
+           
+            // document.getElementById('indexHtml').innerHTML = dataConnect;
+             document.querySelector('#indexHtml').innerHTML = dataConnect;
           },
 
           // Error handling 
@@ -93,38 +94,29 @@
     
     //xử lý search
     document.getElementById("btnSearch").addEventListener("click", () => {
-        // //lấy dữ liệu được chọn bởi người dùng
-        // var search  = document.getElementById('inputSearch').value;
-        // var data = JSON.parse(localStorage.getItem("dataGet"));
+        //lấy dữ liệu được chọn bởi người dùng
+        var search  = document.getElementById('inputSearch').value;
+        var data = JSON.parse(localStorage.getItem("dataGet"));
 
-        // if(search != ""){
+        if(search != ""){
             
-        //     var valueSearchTrim = search.trim();
-        //     var arraySearchSplit = search.split(" ");
-        //     var dataConnectSearch = "";
-        //     dataConnectSearch += htmlData(data, valueSearchTrim);
-        //     for(var i = 1; i < arraySearchSplit.length; i++) {
-        //         dataConnectSearch += htmlData(data, arraySearchSplit[i]);
-        //     }
-        //     if(dataConnectSearch == "") {
-        //         dataConnectSearch += "<h3>Không có dữ liệu</h3>";
-        //     }
+            var valueSearchTrim = search.trim();
+            var arraySearchSplit = search.split(" ");
+            var dataConnectSearch = "";
+            dataConnectSearch += htmlData(data, valueSearchTrim);
+            for(var i = 1; i < arraySearchSplit.length; i++) {
+                dataConnectSearch += htmlData(data, arraySearchSplit[i]);
+            }
+            if(dataConnectSearch == "") {
+                dataConnectSearch += "<h3>Không có dữ liệu</h3>";
+            }
             
-        //     document.getElementById('indexHtml').innerHTML = dataConnectSearch;
-        //     console.log(dataConnectSearch)
-        // }else{
-        //     alert("Vui lòng nhập thông tin tìm kiếm!!! ")
-        // }
+            document.querySelector('#indexHtml').innerHTML = dataConnectSearch;
+            
+        }else{
+            alert("Vui lòng nhập thông tin tìm kiếm!!! ")
+        }
 
-         //lấy dữ liệu được chọn bởi người dùng
-         var domains  = document.getElementById('selectDomains').value;
-         var from  = document.getElementById('inputFrom').value;
-        alert(domains)
-         if(domains == 0){
-             alert("Bạn vui lòng chọn trang tin tức muốn lấy thông tin!!!")
-         }else{
-             ajaxCall(domains, from);
-         }
     });
 
 
